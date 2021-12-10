@@ -8,8 +8,16 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
+
 <header th:insert="header::header"></header>
-<h3 style="text-align: center">Описание учебного заведения</h3>
+<h3 style="text-align: center">Список абитуриентов</h3>
+<ul th:each="enrollee : ${enrollees}">
+    <li>
+        <a th:text="${enrollee.id} + ' ' + ${enrollee.fullName}" th:href="@{/enrollee/{id}(id=${enrollee.getId()})}">
+            enrollee name</a>
+    </li>
+</ul>
+
 </body>
 <footer th:insert="footer::footer"></footer>
 </html>
