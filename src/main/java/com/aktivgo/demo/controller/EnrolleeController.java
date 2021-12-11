@@ -1,20 +1,19 @@
 package com.aktivgo.demo.controller;
 
 import com.aktivgo.demo.dao.EnrolleeListDao;
+import com.aktivgo.demo.dao.ExamListDao;
 import com.aktivgo.demo.model.Enrollee;
-import com.aktivgo.demo.model.Exam;
+import com.aktivgo.demo.vars.Vars;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-
 @Controller
 public class EnrolleeController {
-    private EnrolleeListDao enrollees = new EnrolleeListDao();
+    private final EnrolleeListDao enrollees = new EnrolleeListDao();
+    private final ExamListDao exams = new ExamListDao();
 
     @GetMapping("/enrollees")
     public String enrollees(@NotNull Model model) {
@@ -28,8 +27,8 @@ public class EnrolleeController {
         Enrollee enrollee = enrollees.get(id - 1).get();
         model.addAttribute("title", enrollee.getFullName());
         model.addAttribute("enrollee", enrollee);
-        ArrayList<Exam> exams = new ArrayList<>();
-        model.addAttribute("exams", exams);
+        model.addAttribute("exams", exams.getExamsByEnrolleeId(id));
+        model.addAttribute("passingScore", Vars.PASSING_SCORE);
         return "enrollee";
     }
 }

@@ -11,9 +11,9 @@ public class EnrolleeListDao implements Dao<Enrollee> {
     private List<Enrollee> enrollees = new ArrayList<>();
 
     public EnrolleeListDao() {
-        enrollees.add(new Enrollee(1, "Vladislav", LocalDate.parse("2001-06-01")));
-        enrollees.add(new Enrollee(2, "Pavlodar", LocalDate.parse("2000-11-06")));
-        enrollees.add(new Enrollee(3, "Roman", LocalDate.parse("2001-12-30")));
+        enrollees.add(new Enrollee(1, "Кочкин Владислав", LocalDate.parse("2001-06-01")));
+        enrollees.add(new Enrollee(2, "Ветлугаев Павел", LocalDate.parse("2000-11-06")));
+        enrollees.add(new Enrollee(3, "Кинаш Роман", LocalDate.parse("2001-12-30")));
     }
 
     @Override
