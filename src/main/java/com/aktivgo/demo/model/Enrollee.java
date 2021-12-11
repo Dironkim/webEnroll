@@ -38,4 +38,8 @@ public class Enrollee {
     public void setBirthday(@NotNull LocalDate birthday) {
         this.birthday = birthday;
     }
+
+    public @NotNull String getBirthdayString() {
+        return birthday.toString();
+    }
 }
