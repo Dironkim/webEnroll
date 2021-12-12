@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class ExamListDao implements Dao<Exam> {
-    private List<Exam> exams = new ArrayList<>();
+    private final List<Exam> exams = new ArrayList<>();
 
     public ExamListDao() {
         exams.add(new Exam("Математика", 68, 1));
@@ -34,13 +34,13 @@ public class ExamListDao implements Dao<Exam> {
     }
 
     @Override
-    public int size() {
+    public long size() {
         return exams.size();
     }
 
     @Override
-    public Optional<Exam> get(int id) {
-        return Optional.of(exams.get(id));
+    public Optional<Exam> get(long id) {
+        return Optional.of(exams.get((int) id));
     }
 
     @Override

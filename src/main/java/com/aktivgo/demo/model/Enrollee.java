@@ -1,11 +1,12 @@
 package com.aktivgo.demo.model;
 
+import com.aktivgo.demo.entity.EnrolleeEntity;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 
 public class Enrollee {
-    private int id;
+    private long id;
     private String fullName;
     private LocalDate birthday;
 
@@ -15,11 +16,17 @@ public class Enrollee {
         this.birthday = birthday;
     }
 
-    public int getId() {
+    public Enrollee(EnrolleeEntity enrollee) {
+        this.id = enrollee.getId();
+        this.fullName = enrollee.getFullName();
+        this.birthday = enrollee.getBirthday();
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class EnrolleeListDao implements Dao<Enrollee> {
-    private List<Enrollee> enrollees = new ArrayList<>();
+    private final List<Enrollee> enrollees = new ArrayList<>();
 
     public EnrolleeListDao() {
         enrollees.add(new Enrollee(1, "Кочкин Владислав", LocalDate.parse("2001-06-01")));
@@ -17,13 +17,13 @@ public class EnrolleeListDao implements Dao<Enrollee> {
     }
 
     @Override
-    public int size() {
+    public long size() {
         return enrollees.size();
     }
 
     @Override
-    public Optional<Enrollee> get(int id) {
-        return Optional.of(enrollees.get(id));
+    public Optional<Enrollee> get(long id) {
+        return Optional.of(enrollees.get((int) id));
     }
 
     @Override
@@ -40,5 +40,4 @@ public class EnrolleeListDao implements Dao<Enrollee> {
     public void delete(Enrollee enrollee) {
         enrollees.remove(enrollee);
     }
-
 }
