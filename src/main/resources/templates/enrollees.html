@@ -17,6 +17,7 @@
         <li>
             <a th:text="${enrollee.getId()} + ' ' + ${enrollee.getFullName()}"
                th:href="@{/enrollee/{id}(id=${enrollee.getId()})}"></a>
+            <a th:href="@{/exam/{id}(id=${enrollee.getId()})}">Добавить экзамен</a>
         </li>
     </ul>
     <a th:href="@{/add}">Добавить абитуриента</a>

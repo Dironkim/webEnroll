@@ -8,16 +8,19 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 public class Enrollee {
-    @NotNull private Long id;
+    @NotNull
+    private Long id;
 
     @Size(min = 2, max = 30)
-    @NotNull private String fullName;
+    @NotNull
+    private String fullName;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull private LocalDate birthday;
+    @NotNull
+    private LocalDate birthday;
 
-    public Enrollee() {
-        id = Long.MIN_VALUE;
+    public Enrollee(@NotNull Long id) {
+        this.id = id;
         fullName = "";
         birthday = LocalDate.MIN;
     }
