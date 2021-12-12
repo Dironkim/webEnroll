@@ -12,14 +12,21 @@
 <header th:insert="header::header"></header>
 
 <div class="container">
-    <h3 class="big-title">Список абитуриентов</h3>
-    <ul th:each="enrollee : ${enrollees}">
-        <li>
-            <a th:text="${enrollee.getId()} + ' ' + ${enrollee.getFullName()}"
-               th:href="@{/enrollee/{id}(id=${enrollee.getId()})}"></a>
-        </li>
-    </ul>
-    <a th:href="@{/add}">Добавить абитуриента</a>
+    <form action="#" th:action="@{/add}" th:object="${enrollee}" method="post">
+        <p th:text="'Id: '+${number}"></p>
+        <p>
+            ФИО:
+            <input type="text" th:field="*{fullName}"/>
+        </p>
+        <p>
+            Дата рождения:
+            <input type="date" th:field="*{birthday}"/>
+        </p>
+        <p>
+            <input type="submit" value="Submit"/>
+            <input type="reset" value="Reset"/>
+        </p>
+    </form>
 </div>
 
 <footer th:insert="footer::footer"></footer>

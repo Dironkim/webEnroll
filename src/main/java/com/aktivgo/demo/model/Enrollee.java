@@ -2,13 +2,19 @@ package com.aktivgo.demo.model;
 
 import com.aktivgo.demo.entity.EnrolleeEntity;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 public class Enrollee {
     private long id;
-    private String fullName;
-    private LocalDate birthday;
+    @Size(min=2, max=30) private String fullName;
+    @DateTimeFormat(pattern = "yyyy-MM-dd") private LocalDate birthday;
+
+    public Enrollee() {
+
+    }
 
     public Enrollee(int id, @NotNull String fullName, @NotNull LocalDate birthday) {
         this.id = id;
@@ -16,7 +22,7 @@ public class Enrollee {
         this.birthday = birthday;
     }
 
-    public Enrollee(EnrolleeEntity enrollee) {
+    public Enrollee(@NotNull EnrolleeEntity enrollee) {
         this.id = enrollee.getId();
         this.fullName = enrollee.getFullName();
         this.birthday = enrollee.getBirthday();

@@ -8,7 +8,9 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class EnrolleeController {
@@ -40,8 +42,24 @@ public class EnrolleeController {
         Enrollee enrollee = enrollees.get(id - 1).get();
         model.addAttribute("title", enrollee.getFullName());
         model.addAttribute("enrollee", enrollee);
-        model.addAttribute("exams", exams.getExamsByEnrolleeId(id - 1));
+        model.addAttribute("exams", exams.getExamsByEnrolleeId(id));
         model.addAttribute("passingScore", Vars.PASSING_SCORE);
         return "enrollee";
+    }
+
+    @GetMapping("/add")
+    public String enrolleeForm(@NotNull Model model) {
+        model.addAttribute("title", "Добавление абитуриента");
+        Enrollee enrollee = new Enrollee();
+        model.addAttribute("enrollee", enrollee);
+        model.addAttribute("number", enrollees.size() + 1);
+        return "add";
+    }
+
+    @PostMapping("/add")
+    public String enrolleeSubmit(@ModelAttribute Enrollee enrollee, @NotNull Model model) {
+        enrollees.save(enrollee);
+        model.addAttribute("enrollees", enrollees);
+        return "redirect:/enrollees";
     }
 }
