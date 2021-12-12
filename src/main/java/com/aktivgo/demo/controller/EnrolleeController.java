@@ -57,9 +57,10 @@ public class EnrolleeController {
     }
 
     @PostMapping("/add")
-    public String enrolleeSubmit(@ModelAttribute Enrollee enrollee, @NotNull Model model) {
+    public String enrolleeSubmit(@ModelAttribute @NotNull Enrollee enrollee, @NotNull Model model) {
+        enrollee.setId(enrollees.size() + 1);
         enrollees.save(enrollee);
         model.addAttribute("enrollees", enrollees);
-        return "redirect:/enrollees";
+        return "enrollees";
     }
 }

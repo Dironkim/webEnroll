@@ -8,15 +8,21 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 public class Enrollee {
-    private long id;
-    @Size(min=2, max=30) private String fullName;
-    @DateTimeFormat(pattern = "yyyy-MM-dd") private LocalDate birthday;
+    @NotNull private Long id;
+
+    @Size(min = 2, max = 30)
+    @NotNull private String fullName;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull private LocalDate birthday;
 
     public Enrollee() {
-
+        id = Long.MIN_VALUE;
+        fullName = "";
+        birthday = LocalDate.MIN;
     }
 
-    public Enrollee(int id, @NotNull String fullName, @NotNull LocalDate birthday) {
+    public Enrollee(@NotNull Long id, @NotNull String fullName, @NotNull LocalDate birthday) {
         this.id = id;
         this.fullName = fullName;
         this.birthday = birthday;
@@ -32,7 +38,7 @@ public class Enrollee {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(@NotNull Long id) {
         this.id = id;
     }
 
