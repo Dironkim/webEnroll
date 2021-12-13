@@ -1,6 +1,7 @@
 package com.aktivgo.demo.dao;
 
 import com.aktivgo.demo.model.Enrollee;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,8 +23,8 @@ public class EnrolleeListDao implements Dao<Enrollee> {
     }
 
     @Override
-    public Optional<Enrollee> get(long id) {
-        return Optional.of(enrollees.get((int) id));
+    public Optional<Enrollee> get(@NotNull Long id) {
+        return Optional.of(enrollees.get(id.byteValue()));
     }
 
     @Override

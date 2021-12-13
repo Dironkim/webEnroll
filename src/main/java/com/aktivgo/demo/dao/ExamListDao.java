@@ -1,6 +1,7 @@
 package com.aktivgo.demo.dao;
 
 import com.aktivgo.demo.model.Exam;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +40,8 @@ public class ExamListDao implements Dao<Exam> {
     }
 
     @Override
-    public Optional<Exam> get(long id) {
-        return Optional.of(exams.get((int) id));
+    public Optional<Exam> get(@NotNull Long id) {
+        return Optional.of(exams.get(id.byteValue()));
     }
 
     @Override

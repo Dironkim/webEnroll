@@ -11,16 +11,16 @@ public class Enrollee {
     @NotNull
     private Long id;
 
-    @Size(min = 2, max = 30)
     @NotNull
+    @Size(min = 2, max = 30)
     private String fullName;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 
-    public Enrollee(@NotNull Long id) {
-        this.id = id;
+    public Enrollee() {
+        id = 0L;
         fullName = "";
         birthday = LocalDate.MIN;
     }

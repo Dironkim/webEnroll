@@ -15,14 +15,10 @@ public class ExamDBDao implements Dao<ExamEntity> {
 
     private H2Connection h2Connection;
 
-    public ExamDBDao() throws SQLException {
-        h2Connection = H2Connection.getH2Connection();
+    public ExamDBDao() throws SQLException, ClassNotFoundException {
+        h2Connection = new H2Connection();
         Statement statement = h2Connection.getConnection().createStatement();
         String query = "CREATE TABLE IF NOT EXISTS EXAM (idEnrollee number primary key not null, subject varchar(30) not null, score int not null);";
-        ExamListDao exams = new ExamListDao();
-        for (Exam exam : exams.getAll()) {
-            query += "INSERT INTO EXAM (idEnrollee, subject, score) VALUES (exam.getIdEnrollee(), exam.getSubject(), exam.getScore());";
-        }
         statement.execute(query);
         statement.close();
     }
@@ -45,7 +41,7 @@ public class ExamDBDao implements Dao<ExamEntity> {
     }
 
     @Override
-    public Optional<ExamEntity> get(long idEnrollee) {
+    public Optional<ExamEntity> get(Long idEnrollee) {
         try {
             Statement statement = h2Connection.getConnection().createStatement();
             String query = "SELECT FROM EXAM WHERE id = id";

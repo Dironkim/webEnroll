@@ -23,7 +23,7 @@ public class EnrolleeService {
         return enrolleeDao.getAll();
     }
 
-    public Enrollee getEnrollee(long id) {
+    public Enrollee getEnrollee(Long id) {
         return (Enrollee) enrolleeDao.get(id).get();
     }
 

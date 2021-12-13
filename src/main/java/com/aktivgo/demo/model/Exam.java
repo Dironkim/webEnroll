@@ -6,8 +6,10 @@ import org.jetbrains.annotations.NotNull;
 public class Exam {
     @NotNull
     private String subject;
+
     @NotNull
     private Integer score;
+
     @NotNull
     private Long idEnrollee;
 

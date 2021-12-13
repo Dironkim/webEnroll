@@ -12,21 +12,21 @@ public class H2Connection {
     private static final String PASSWORD = "";
     private static final String DRIVER_CLASS = "org.h2.Driver";
 
-    private static H2Connection h2Connection;
+    //private static H2Connection h2Connection;
     private static Connection connection;
 
-    private H2Connection() throws ClassNotFoundException, SQLException {
+    public H2Connection() throws ClassNotFoundException, SQLException {
         Class.forName(DRIVER_CLASS);
         connection = DriverManager.getConnection(JDBC_URL, USER, PASSWORD);
     }
 
-    public static @NotNull H2Connection getH2Connection() {
-        if (h2Connection == null) {
-            h2Connection = (H2Connection) connection;
+    /*public static @NotNull H2Connection getH2Connection() {
+        if (connection == null) {
+            connection = new H2Connection();
         }
 
         return h2Connection;
-    }
+    }*/
 
     public @NotNull Connection getConnection() {
         return connection;
