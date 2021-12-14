@@ -4,6 +4,8 @@ import com.aktivgo.demo.entity.ExamEntity;
 import org.jetbrains.annotations.NotNull;
 
 public class Exam {
+    private Long id;
+
     @NotNull
     private String subject;
 
@@ -14,12 +16,14 @@ public class Exam {
     private Long idEnrollee;
 
     public Exam() {
+        id = 0L;
         subject = "";
         score = 0;
         idEnrollee = 0L;
     }
 
-    public Exam(@NotNull String subject, int score, @NotNull Long idEnrollee) {
+    public Exam(Long id, @NotNull String subject, int score, @NotNull Long idEnrollee) {
+        this.id = id;
         this.subject = subject;
         this.score = score;
         this.idEnrollee = idEnrollee;
@@ -53,5 +57,13 @@ public class Exam {
 
     public void setIdEnrollee(long idEnrollee) {
         this.idEnrollee = idEnrollee;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

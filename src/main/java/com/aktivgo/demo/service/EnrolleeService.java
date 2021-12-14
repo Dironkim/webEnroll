@@ -24,7 +24,7 @@ public class EnrolleeService {
     }
 
     public Enrollee getEnrollee(Long id) {
-        return (Enrollee) enrolleeDao.get(id).get();
+        return new Enrollee((EnrolleeEntity)(enrolleeDao.get(id).get()));
     }
 
     public void save(@NotNull Enrollee enrollee) {

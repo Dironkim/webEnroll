@@ -11,7 +11,7 @@ public class ExamListDao implements Dao<Exam> {
     private final List<Exam> exams = new ArrayList<>();
 
     public ExamListDao() {
-        exams.add(new Exam("Математика", 68, 1L));
+        /*exams.add(new Exam("Математика", 68, 1L));
         exams.add(new Exam("Математика", 100, 2L));
         exams.add(new Exam("Математика", 80, 3L));
         exams.add(new Exam("Информатика", 80, 1L));
@@ -19,7 +19,7 @@ public class ExamListDao implements Dao<Exam> {
         exams.add(new Exam("Информатика", 90, 3L));
         exams.add(new Exam("Русский язык", 20, 1L));
         exams.add(new Exam("Русский язык", 100, 2L));
-        exams.add(new Exam("Русский язык", 100, 3L));
+        exams.add(new Exam("Русский язык", 100, 3L));*/
     }
 
     public List<Exam> getExamsByEnrolleeId(int idEnrollee) {

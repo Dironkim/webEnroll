@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.Date;
 
 public class Enrollee {
     @NotNull
@@ -17,15 +18,15 @@ public class Enrollee {
 
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate birthday;
+    private Date birthday;
 
     public Enrollee() {
         id = 0L;
         fullName = "";
-        birthday = LocalDate.MIN;
+        birthday = new Date();
     }
 
-    public Enrollee(@NotNull Long id, @NotNull String fullName, @NotNull LocalDate birthday) {
+    public Enrollee(@NotNull Long id, @NotNull String fullName, @NotNull Date birthday) {
         this.id = id;
         this.fullName = fullName;
         this.birthday = birthday;
@@ -53,11 +54,11 @@ public class Enrollee {
         this.fullName = fullName;
     }
 
-    public @NotNull LocalDate getBirthday() {
+    public @NotNull Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(@NotNull LocalDate birthday) {
+    public void setBirthday(@NotNull Date birthday) {
         this.birthday = birthday;
     }
 

@@ -2,16 +2,20 @@ package com.aktivgo.demo.entity;
 
 import com.aktivgo.demo.model.Exam;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/*@Entity
-@Table(name = "ENROLLEE")*/
+@Entity
+@Table(name = "EXAM")
 public class ExamEntity {
     @Id
+    @Column(name = "ID", nullable = false)
+    private Long id;
+
     @Column(name = "ID_ENROLLEE", nullable = false)
     private Long idEnrollee;
 
@@ -25,13 +29,15 @@ public class ExamEntity {
 
     }
 
-    public ExamEntity(@NotNull Long idEnrollee, @NotNull String subject, int score) {
+    public ExamEntity(Long id, @NotNull Long idEnrollee, @NotNull String subject, int score) {
+        this.id = id;
         this.idEnrollee = idEnrollee;
         this.subject = subject;
         this.score = score;
     }
 
     public ExamEntity(@NotNull Exam exam) {
+        this.id = exam.getId();
         this.idEnrollee = exam.getIdEnrollee();
         this.subject = exam.getSubject();
         this.score = exam.getScore();
@@ -59,5 +65,13 @@ public class ExamEntity {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

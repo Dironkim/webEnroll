@@ -5,7 +5,7 @@ import com.aktivgo.demo.entity.EnrolleeEntity;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
-import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +17,7 @@ public class EnrolleeDBDao implements Dao<EnrolleeEntity> {
         h2Connection = new H2Connection();
         Statement statement = h2Connection.getConnection().createStatement();
         String query = "CREATE TABLE IF NOT EXISTS ENROLLEE (id long primary key not null, birthday date not null, fullName varchar(30) not null);" +
-                "INSERT INTO ENROLLEE (id, fullName, birthday) VALUES (1, 'Кочкин Владислав', '2001-06-01');";
+                "INSERT INTO ENROLLEE (id, fullName, birthday) VALUES (0, 'Кочкин Владислав', '2001-06-01');";
         statement.execute(query);
         statement.close();
     }
@@ -31,10 +31,12 @@ public class EnrolleeDBDao implements Dao<EnrolleeEntity> {
     public @NotNull Optional<EnrolleeEntity> get(Long id) {
         try {
             Statement statement = h2Connection.getConnection().createStatement();
-            String query = "SELECT FROM ENROLLEE WHERE id = " + id;
+            String query = "SELECT * FROM ENROLLEE WHERE id = " + id;
             ResultSet resultSet = statement.executeQuery(query);
+            resultSet.next();
+            Long id1 = resultSet.getLong("id");
             String fullName = resultSet.getString("fullName");
-            LocalDate birthday = resultSet.getDate("birthday").toLocalDate();
+            Date birthday = resultSet.getDate("birthday");
             statement.close();
             return Optional.of(new EnrolleeEntity(id, fullName, birthday));
         } catch (SQLException e) {
@@ -53,7 +55,7 @@ public class EnrolleeDBDao implements Dao<EnrolleeEntity> {
             while (resultSet.next()) {
                 Long id = resultSet.getLong("id");
                 String fullName = resultSet.getString("fullName");
-                LocalDate birthday = resultSet.getDate("birthday").toLocalDate();
+                Date birthday = resultSet.getDate("birthday");
                 EnrolleeEntity enrolleeEntity = new EnrolleeEntity(id, fullName, birthday);
                 enrolleeEntities.add(enrolleeEntity);
             }
@@ -71,7 +73,7 @@ public class EnrolleeDBDao implements Dao<EnrolleeEntity> {
             String query = "INSERT INTO ENROLLEE (id, birthday, fullName) VALUES (?, ?, ?)";
             PreparedStatement preparedStatement = h2Connection.getConnection().prepareStatement(query);
             preparedStatement.setLong(1, enrollee.getId());
-            preparedStatement.setDate(2, Date.valueOf(enrollee.getBirthday()));
+            preparedStatement.setDate(2, java.sql.Date.valueOf(enrollee.getBirthday().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
             preparedStatement.setString(3, enrollee.getFullName());
             preparedStatement.execute();
             preparedStatement.close();

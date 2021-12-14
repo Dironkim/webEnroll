@@ -60,7 +60,7 @@ public class EnrolleeController {
         model.addAttribute("title", "Добавление абитуриента");
         Enrollee enrollee = new Enrollee();
         model.addAttribute("enrollee", enrollee);
-        model.addAttribute("number", enrollees.sizeEnrollees() + 1);
+        model.addAttribute("number", enrollees.sizeEnrollees());
         return "add";
     }
 

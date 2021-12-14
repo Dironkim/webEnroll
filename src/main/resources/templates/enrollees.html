@@ -15,7 +15,7 @@
     <h3 class="big-title">Список абитуриентов</h3>
     <ul th:each="enrollee : ${enrollees}">
         <li>
-            <a th:text="${enrollee.getId() + 1} + ' ' + ${enrollee.getFullName()}"
+            <a th:text="${enrollee.getId()} + ' ' + ${enrollee.getFullName()}"
                th:href="@{/enrollee/{id}(id=${enrollee.getId()})}"></a>
             <a th:href="@{/exam/{id}(id=${enrollee.getId()})}">Добавить экзамен</a>
         </li>

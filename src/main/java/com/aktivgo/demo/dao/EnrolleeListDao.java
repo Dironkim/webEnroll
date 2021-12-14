@@ -12,9 +12,9 @@ public class EnrolleeListDao implements Dao<Enrollee> {
     private final List<Enrollee> enrollees = new ArrayList<>();
 
     public EnrolleeListDao() {
-        enrollees.add(new Enrollee(1L, "Кочкин Владислав", LocalDate.parse("2001-06-01")));
+        /*enrollees.add(new Enrollee(1L, "Кочкин Владислав", LocalDate.parse("2001-06-01")));
         enrollees.add(new Enrollee(2L, "Ветлугаев Павел", LocalDate.parse("2000-11-06")));
-        enrollees.add(new Enrollee(3L, "Кинаш Роман", LocalDate.parse("2001-12-30")));
+        enrollees.add(new Enrollee(3L, "Кинаш Роман", LocalDate.parse("2001-12-30")));*/
     }
 
     @Override
