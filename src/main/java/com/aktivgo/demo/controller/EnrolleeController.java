@@ -20,9 +20,6 @@ import java.util.ArrayList;
 
 @Controller
 public class EnrolleeController {
-   /* private final EnrolleeListDao enrollees = new EnrolleeListDao();
-    private final ExamListDao exams = new ExamListDao();*/
-
     private Long idEnrollee = 0L;
 
     EnrolleeService enrollees;
@@ -31,7 +28,6 @@ public class EnrolleeController {
     {
         try {
             enrollees = new EnrolleeService(new EnrolleeDBDao());
-
             exams = new ExamService(new ExamDBDao());
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -89,6 +85,6 @@ public class EnrolleeController {
         exam.setIdEnrollee(idEnrollee);
         exams.save(exam);
         model.addAttribute("exams", exams);
-        return "redirect:/enrollee/" + exam.getIdEnrollee();
+        return "redirect:/enrollee/" + idEnrollee;
     }
 }

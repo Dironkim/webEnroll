@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Enrollee {

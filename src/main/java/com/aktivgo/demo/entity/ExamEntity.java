@@ -29,7 +29,7 @@ public class ExamEntity {
 
     }
 
-    public ExamEntity(Long id, @NotNull Long idEnrollee, @NotNull String subject, int score) {
+    public ExamEntity(@NotNull Long id, @NotNull Long idEnrollee, @NotNull String subject, int score) {
         this.id = id;
         this.idEnrollee = idEnrollee;
         this.subject = subject;
@@ -37,7 +37,6 @@ public class ExamEntity {
     }
 
     public ExamEntity(@NotNull Exam exam) {
-        this.id = exam.getId();
         this.idEnrollee = exam.getIdEnrollee();
         this.subject = exam.getSubject();
         this.score = exam.getScore();

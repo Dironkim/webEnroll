@@ -46,10 +46,11 @@ public class ExamDBDao implements Dao<ExamEntity> {
             String query = "SELECT * FROM EXAM WHERE idEnrollee = " + idEnrollee;
             ResultSet resultSet = statement.executeQuery(query);
             resultSet.next();
+            Long id = resultSet.getLong("id");
             String subject = resultSet.getString("subject");
             int score = resultSet.getInt("score");
             statement.close();
-            return Optional.of(new ExamEntity(null, idEnrollee, subject, score));
+            return Optional.of(new ExamEntity(id, idEnrollee, subject, score));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -82,12 +83,11 @@ public class ExamDBDao implements Dao<ExamEntity> {
     @Override
     public void save(@NotNull ExamEntity examEntity) {
         try {
-            String query = "INSERT INTO EXAM (id, idEnrollee, subject, score) VALUES (?, ?, ?, ?)";
+            String query = "INSERT INTO EXAM (id, idEnrollee, subject, score) VALUES (null, ?, ?, ?)";
             PreparedStatement preparedStatement = h2Connection.getConnection().prepareStatement(query);
-            preparedStatement.setLong(1, examEntity.getId());
-            preparedStatement.setLong(2, examEntity.getIdEnrollee());
-            preparedStatement.setString(3, examEntity.getSubject());
-            preparedStatement.setInt(4, examEntity.getScore());
+            preparedStatement.setLong(1, examEntity.getIdEnrollee());
+            preparedStatement.setString(2, examEntity.getSubject());
+            preparedStatement.setInt(3, examEntity.getScore());
             preparedStatement.execute();
             preparedStatement.close();
         } catch (SQLException e) {

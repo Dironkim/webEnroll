@@ -20,15 +20,14 @@ public class ExamService {
     }
 
     public @NotNull List<Exam> getAllExams() {
-        return examDao.getAll();
+        return getExams(examDao.getAll());
     }
 
-    public Exam getExam(long id) {
+    public Exam getExam(@NotNull Long id) {
         return (Exam) examDao.get(id).get();
     }
 
     public void save(@NotNull Exam exam) {
-        exam.setIdEnrollee(examDao.size());
         ExamEntity examEntity = new ExamEntity(exam);
         examDao.save(examEntity);
     }
@@ -41,7 +40,7 @@ public class ExamService {
         return exams;
     }
 
-    public List<Exam> getExamsByEnrolleeId(long idEnrollee) {
+    public List<Exam> getExamsByEnrolleeId(@NotNull Long idEnrollee) {
         List<Exam> examList = new ArrayList<>();
 
         for (Exam exam : getAllExams()) {
