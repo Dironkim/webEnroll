@@ -32,6 +32,11 @@ public class ExamService {
         examDao.save(examEntity);
     }
 
+    public void delete(@NotNull Exam exam) {
+        ExamEntity examEntity = new ExamEntity(exam);
+        examDao.delete(examEntity);
+    }
+
     public List<Exam> getExams(@NotNull List<ExamEntity> examEntities) {
         List<Exam> exams = new ArrayList<>();
         for (ExamEntity examEntity : examEntities) {

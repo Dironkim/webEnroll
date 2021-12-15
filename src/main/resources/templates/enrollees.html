@@ -10,16 +10,29 @@
 <body>
 <header th:insert="header::header"></header>
 
-<div class="container">
+<div th:align="center" class="col-md-5 mx-auto">
     <h3>Список абитуриентов</h3>
-    <ul th:each="enrollee : ${enrollees}">
-        <li>
-            <a th:text="${enrollee.getId()} + ' ' + ${enrollee.getFullName()}"
-               th:href="@{/enrollee/{id}(id=${enrollee.getId()})}"></a>
-            <a th:href="@{/exam/{id}(id=${enrollee.getId()})}">Добавить экзамен</a>
-        </li>
-    </ul>
-    <a th:href="@{/add}">Добавить абитуриента</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Экзамены</th>
+        </tr>
+        </thead>
+        <tbody th:each="enrollee : ${enrollees}">
+        <tr>
+            <th scope="row" th:text="${enrollee.getId()}"></th>
+            <td>
+                <a th:text="${enrollee.getFullName()}" th:href="@{/enrollee/{id}(id=${enrollee.getId()})}"></a>
+            </td>
+            <td>
+                <a th:href="@{/exam/{id}(id=${enrollee.getId()})}">Добавить экзамен</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a type="button" class="btn btn-primary" th:href="@{/add}">Добавить абитуриента</a>
 </div>
 
 <footer th:insert="footer::footer"></footer>

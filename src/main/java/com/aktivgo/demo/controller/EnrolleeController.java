@@ -62,9 +62,11 @@ public class EnrolleeController {
 
     @PostMapping("/add")
     public String enrolleeSubmit(@ModelAttribute @NotNull Enrollee enrollee, @NotNull Model model) {
-        enrollee.setId(enrollees.sizeEnrollees());
-        enrollees.save(enrollee);
-        model.addAttribute("enrollees", enrollees);
+        if (!enrollee.getFullName().isEmpty()) {
+            enrollee.setId(enrollees.sizeEnrollees());
+            enrollees.save(enrollee);
+            model.addAttribute("enrollees", enrollees);
+        }
         return "redirect:/enrollees";
     }
 
@@ -75,16 +77,28 @@ public class EnrolleeController {
         model.addAttribute("subjects", subjects);
         model.addAttribute("subject", subjects.get(0));
         idEnrollee = id;
-        model.addAttribute("exam",new Exam());
+        model.addAttribute("exam", new Exam());
         model.addAttribute("id", id);
         return "exam";
     }
 
     @PostMapping("/exam")
     public String examSubmit(@ModelAttribute @NotNull Exam exam, @NotNull Model model) {
-        exam.setIdEnrollee(idEnrollee);
-        exams.save(exam);
-        model.addAttribute("exams", exams);
+        if (!exam.getSubject().isEmpty() && exam.getScore() >= 0 && exam.getScore() <= 100 && !containsSubject(exam.getSubject())) {
+            exam.setIdEnrollee(idEnrollee);
+            exams.save(exam);
+            model.addAttribute("exams", exams);
+        }
         return "redirect:/enrollee/" + idEnrollee;
+    }
+
+    private boolean containsSubject(String subject) {
+        for(Exam exam : exams.getExamsByEnrolleeId(idEnrollee)) {
+            if (exam.getSubject().equals(subject)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

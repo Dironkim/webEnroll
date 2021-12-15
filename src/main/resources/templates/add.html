@@ -10,23 +10,28 @@
 <body>
 <header th:insert="header::header"></header>
 
-<div class="container">
-    <form action="#" th:action="@{/add}" th:object="${enrollee}" method="post">
-        <p th:text="'Id: '+${number}"></p>
-        <p>
-            ФИО:
-            <input type="text" th:field="*{fullName}"/>
-        </p>
-        <p>
-            Дата рождения:
-            <input type="date" th:field="*{birthday}"/>
-        </p>
-        <p>
-            <input type="submit" value="Подтвердить"/>
-            <input type="reset" value="Сбросить"/>
-        </p>
-    </form>
-</div>
+<form th:align="center" class="col-md-3 mx-auto" action="#" th:action="@{/add}" th:object="${enrollee}" method="post">
+    <div class="form-group row my-3">
+        <label for="staticId" class="col-md-2 col-form-label">Id абитуриента:</label>
+        <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" id="staticId" th:value="${number}">
+        </div>
+    </div>
+    <div class="form-group row my-3">
+        <label for="inputFullName" class="col-md-2 col-form-label">ФИО:</label>
+        <div class="col-sm-10">
+            <input th:field="*{fullName}" type="text" class="form-control" id="inputFullName" placeholder="Введите ФИО">
+        </div>
+    </div>
+    <div class="form-group row my-3">
+        <label for="inputBirthday" class="col-md-2 col-form-label">Дата рождения:</label>
+        <div class="col-sm-10">
+            <input type="date" class="form-control" id="inputBirthday" th:field="*{birthday}">
+        </div>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Подтвердить"/>
+    <input type="reset" class="btn btn-secondary" value="Сбросить"/>
+</form>
 
 <footer th:insert="footer::footer"></footer>
 </body>
