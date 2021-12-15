@@ -17,7 +17,7 @@ public class EnrolleeDBDao implements Dao<EnrolleeEntity> {
         h2Connection = new H2Connection();
         Statement statement = h2Connection.getConnection().createStatement();
         String query = "CREATE TABLE IF NOT EXISTS ENROLLEE (id long primary key not null, birthday date not null, fullName varchar(30) not null);" +
-                "INSERT INTO ENROLLEE (id, fullName, birthday) VALUES (0, 'Кочкин Владислав', '2001-06-01');";
+                "INSERT INTO ENROLLEE (id, fullName, birthday) VALUES (0, 'Кочкин Владислав Романович', '2001-06-01');";
         statement.execute(query);
         statement.close();
     }

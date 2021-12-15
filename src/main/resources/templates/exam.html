@@ -10,16 +10,16 @@
 <body>
 <header th:insert="header::header"></header>
 
-<form th:align="center" class="col-md-3 mx-auto" action="#" th:action="@{/exam}" th:object="${exam}" method="post">
+<form th:align="center" class="col-md-4 mx-auto" action="#" th:action="@{/exam}" th:object="${exam}" method="post">
     <div class="form-group row my-3">
-        <label for="staticId" class="col-md-3 col-form-label">Id абитуриента:</label>
+        <label for="staticId" class="col-md-5 col-form-label">Id абитуриента:</label>
         <div class="col-sm-7">
             <input type="text" readonly class="form-control-plaintext" id="staticId" th:value="${id}">
         </div>
     </div>
     <div class="form-group row my-3">
-        <label for="selectSubject" class="col-md-2 col-form-label">Предмет:</label>
-        <div class="col-sm-10">
+        <label for="selectSubject" class="col-md-5 col-form-label">Предмет:</label>
+        <div class="col-sm-7">
             <select id="selectSubject" class="form-select" size="1" th:field="*{subject}">
                 <option value="">--</option>
                 <option th:each="subject : ${subjects}" th:value="${subject}" th:utext="${subject}"></option>
@@ -27,36 +27,14 @@
         </div>
     </div>
     <div class="form-group row my-3">
-        <label for="inputScore" class="col-md-2 col-form-label">Баллы:</label>
-        <div class="col-sm-10">
+        <label for="inputScore" class="col-md-5 col-form-label">Баллы:</label>
+        <div class="col-sm-7">
             <input type="text" class="form-control" id="inputScore" th:field="*{score}">
         </div>
     </div>
     <input type="submit" class="btn btn-primary" value="Подтвердить"/>
     <input type="reset" class="btn btn-secondary" value="Сбросить"/>
 </form>
-
-<!--<form action="#" th:action="@{/exam}" th:object="${exam}" method="post">
-    <p>
-        Id абитуриента:
-        <span th:text="${id}"></span>
-    </p>
-    <p>
-        Предмет:
-        <select size="1" th:field="*{subject}">
-            <option value="">&#45;&#45;</option>
-            <option th:each="subject : ${subjects}" th:value="${subject}" th:utext="${subject}"></option>
-        </select>
-    </p>
-    <p>
-        Баллы:
-        <input type="text" th:field="*{score}"/>
-    </p>
-    <p>
-        <input type="submit" value="Подтвердить"/>
-        <input type="reset" value="Сбросить"/>
-    </p>
-</form>-->
 
 <footer th:insert="footer::footer"></footer>
 </body>
