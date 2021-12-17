@@ -8,6 +8,7 @@ import com.aktivgo.demo.service.EnrolleeService;
 import com.aktivgo.demo.service.ExamService;
 import com.aktivgo.demo.vars.Vars;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,17 +23,10 @@ import java.util.ArrayList;
 public class EnrolleeController {
     private Long idEnrollee = 0L;
 
+    @Autowired
     EnrolleeService enrollees;
+    @Autowired
     ExamService exams;
-
-    {
-        try {
-            enrollees = new EnrolleeService(new EnrolleeDBDao());
-            exams = new ExamService(new ExamDBDao());
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 
     @GetMapping("/enrollees")
     public String enrollees(@NotNull Model model) {

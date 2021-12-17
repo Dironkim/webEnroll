@@ -3,6 +3,8 @@ package com.aktivgo.demo.dao;
 import com.aktivgo.demo.H2Connection;
 import com.aktivgo.demo.entity.EnrolleeEntity;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.*;
 import java.time.ZoneId;
@@ -10,16 +12,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class EnrolleeDBDao implements Dao<EnrolleeEntity> {
-    private final H2Connection h2Connection;
 
-    public EnrolleeDBDao() throws SQLException, ClassNotFoundException {
-        h2Connection = new H2Connection();
+    private H2Connection h2Connection;
+
+    @Autowired
+    public EnrolleeDBDao(H2Connection h2Connection) throws SQLException, ClassNotFoundException {
+        this.h2Connection = h2Connection;
         Statement statement = h2Connection.getConnection().createStatement();
         String query = "CREATE TABLE IF NOT EXISTS ENROLLEE (id long primary key not null, birthday date not null, fullName varchar(30) not null);" +
                 "INSERT INTO ENROLLEE (id, fullName, birthday) VALUES (0, 'Кочкин Владислав Романович', '2001-06-01');";
         statement.execute(query);
         statement.close();
+        this.h2Connection = h2Connection;
     }
 
     @Override

@@ -4,14 +4,17 @@ import com.aktivgo.demo.dao.Dao;
 import com.aktivgo.demo.entity.EnrolleeEntity;
 import com.aktivgo.demo.model.Enrollee;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class EnrolleeService {
-    private Dao enrolleeDao;
+    private Dao<EnrolleeEntity> enrolleeDao;
 
-    public EnrolleeService(Dao enrolleeDao) {
+    public EnrolleeService(Dao<EnrolleeEntity> enrolleeDao) {
         this.enrolleeDao = enrolleeDao;
     }
 
@@ -19,7 +22,7 @@ public class EnrolleeService {
         return enrolleeDao.size();
     }
 
-    public @NotNull List<Enrollee> getAllEnrollees() {
+    public @NotNull List<EnrolleeEntity> getAllEnrollees() {
         return enrolleeDao.getAll();
     }
 

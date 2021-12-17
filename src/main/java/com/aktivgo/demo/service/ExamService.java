@@ -4,14 +4,16 @@ import com.aktivgo.demo.dao.Dao;
 import com.aktivgo.demo.entity.ExamEntity;
 import com.aktivgo.demo.model.Exam;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ExamService {
-    private Dao examDao;
+    private Dao<ExamEntity> examDao;
 
-    public ExamService(Dao examDao) {
+    public ExamService(Dao<ExamEntity> examDao) {
         this.examDao = examDao;
     }
 
@@ -23,8 +25,8 @@ public class ExamService {
         return getExams(examDao.getAll());
     }
 
-    public Exam getExam(@NotNull Long id) {
-        return (Exam) examDao.get(id).get();
+    public ExamEntity getExam(@NotNull Long id) {
+        return examDao.get(id).get();
     }
 
     public void save(@NotNull Exam exam) {
