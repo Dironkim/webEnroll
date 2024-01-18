@@ -1,5 +1,6 @@
 package com.spring.demo.models;
 
+import com.spring.demo.entities.ExamEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,5 +16,12 @@ public class Exam {
     private Integer score;
 
     private Long idEnrollee;
-
+    public Exam(ExamEntity exam) {
+        setSubject(exam.getSubject());
+        setScore(exam.getScore());
+        setIdEnrollee(exam.getIdEnrollee());
+    }
+    public boolean notNull() {
+        return subject != null && score != null;
+    }
 }

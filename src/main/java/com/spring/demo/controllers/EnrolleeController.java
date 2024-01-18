@@ -1,10 +1,14 @@
 package com.spring.demo.controllers;
 
+import com.spring.demo.dao.EnrolleeDBDao;
 import com.spring.demo.dao.EnrolleeListDao;
+import com.spring.demo.dao.ExamDBDao;
 import com.spring.demo.dao.ExamListDao;
 import com.spring.demo.mocks.ExamMockData;
 import com.spring.demo.models.Enrollee;
 import com.spring.demo.models.Exam;
+import com.spring.demo.service.EnrolleeService;
+import com.spring.demo.service.ExamService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,77 +27,92 @@ import java.util.stream.Collectors;
 @Controller
 public class EnrolleeController {
     Long enrolleeId;
-    EnrolleeListDao enrolleeDAO = new EnrolleeListDao();
-    ExamListDao examDao = new ExamListDao();
+    Long curId;
+    //EnrolleeListDao enrolleeDAO = new EnrolleeListDao();
+    //ExamListDao examDao = new ExamListDao();
+    EnrolleeService enrolleeService;
+
+    {
+        try {
+            enrolleeService = new EnrolleeService(new EnrolleeDBDao());
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    ExamService examService;
+
+    {
+        try {
+            examService = new ExamService(new ExamDBDao());
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @GetMapping("/enrollees")
-    public String enrollees(Model model){
-        model.addAttribute("title","Список абитуриентов");
-        List<Enrollee> enrollees =enrolleeDAO.getAll(); // получение списка абитуриентов
+    public String enrollees(Model model) {
+        model.addAttribute("title", "Список абитуриентов");
+        List<Enrollee> enrollees = enrolleeService.getAllEnrollees();
         model.addAttribute("enrollees", enrollees);
         return "enrollees";
     }
+
     @GetMapping("/enrollee/{id}")
-    public String enrollee(@PathVariable Long id, Model model){
-        Optional<Enrollee> enrolleeOptional = enrolleeDAO.get(id);
-
-        if (enrolleeOptional.isPresent()) {
-            Enrollee enrollee = enrolleeOptional.get();
-            model.addAttribute("enrollee", enrollee);
-
-            // Получение экзаменов, сданных абитуриентом
-            List<Exam> exams = examDao.getExamsByEnrolleeId(id);// Логика получения экзаменов
-            model.addAttribute("exams", exams);
-
-            return "enrollee";
-        }
-        return "home";
+    public String enrollee(@PathVariable int id, Model model) {
+        Enrollee enrollee = enrolleeService.getAllEnrollees().get(id);
+        model.addAttribute("enrollee", enrollee);
+        List<Exam> exams = examService.getExamsByEnrolleeId(enrollee.getId());
+        model.addAttribute("exams", exams);
+        return "enrollee";
     }
     @GetMapping("/add")
     public String enrolleeForm(Model model) {
-        model.addAttribute("title","Добавление абитуриента");
-        Enrollee enrollee = new Enrollee ();
+        model.addAttribute("title", "Добавление абитуриента");
+        Enrollee enrollee = new Enrollee();
         model.addAttribute("enrollee", enrollee);
-        model.addAttribute("number", enrolleeDAO.size());
+        model.addAttribute("number", enrolleeService.getAllEnrollees().size());
         return "add";
     }
+
     @PostMapping("/add")
     public String enrolleeSubmit(@ModelAttribute Enrollee enrollee, Model model) {
-        enrollee.setId((long)enrolleeDAO.getAll().size());
-        enrolleeDAO.save(enrollee);
-        List<Enrollee> enrollees = enrolleeDAO.getAll();// получение списка абитуриентов
-        model.addAttribute("enrollees", enrollees);
+        if (enrollee.notNull()) {
+            curId = (long) enrolleeService.getAllEnrollees().size();
+            enrollee.setId(curId);
+            enrolleeService.save(enrollee);
+            List<Enrollee> enrollees = enrolleeService.getAllEnrollees();
+            model.addAttribute("enrollees", enrollees);
+        }
         return "redirect:/enrollees";
     }
-    @GetMapping("/exam{id}")
-    public String examForm(@PathVariable Long id, Model model) {
-        model.addAttribute("title","Добавление экзамена'");
-        List<String> subjects = ExamMockData.createMockExams().stream()
-                .map(Exam::getSubject)
-                .collect(Collectors.toList());// список всех дисциплин для формы
+
+    @GetMapping("/exam/{id}")
+    public String examForm(@PathVariable long id, Model model) {
+        enrolleeId = id;
+        model.addAttribute("title", "Добавление экзамена'");
+        List<String> subjects = new ArrayList<>();
+        subjects.add("Русский язык");
+        subjects.add("Математика");
+        subjects.add("Физика");
+        subjects.add("Информатика");
         model.addAttribute("subjects", subjects);
-        model.addAttribute("subject", subjects.get(0));
         Exam exam = new Exam();
         model.addAttribute("exam", exam);
         model.addAttribute("id", id);
-        enrolleeId =id;
         return "exam";
     }
 
     @PostMapping("/exam")
     public String examSubmit(@ModelAttribute Exam exam, Model model) {
-        if (!exam.getSubject().isEmpty() && exam.getScore() >= 0 && exam.getScore() <= 100 && !containsSubject(exam.getSubject())) {
+        if (exam.notNull() && examService.getAllExams().stream()
+                .filter(x -> Objects.equals(x.getSubject(), exam.getSubject()) && Objects.equals(x.getIdEnrollee(), enrolleeId))
+                .toList().isEmpty()) {
             exam.setIdEnrollee(enrolleeId);
-            examDao.save(exam);
-            model.addAttribute("exams", examDao);
+            examService.save(exam);
+            model.addAttribute("exam", exam);
         }
-        return "redirect:/enrollee/"+enrolleeId;
+        return "redirect:/enrollees";
     }
-    private boolean containsSubject(String subject) {
-        for(Exam exam : examDao.getExamsByEnrolleeId(enrolleeId)) {
-            if (exam.getSubject().equals(subject)) {
-                return true;
-            }
-        }
-        return false;
-    }
+
 }

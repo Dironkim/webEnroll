@@ -23,7 +23,7 @@
             <td th:text="${exam.getScore>80}? ${true} : ${false}">yes</td>
         </tr>
     </table>
-    <a th:href="@{/exam{id}(id=${enrollee.getId()})}">Добавить экзамен </a>
+    <a th:href="@{/exam/{id}(id=${enrollee.getId()})}">Добавить экзамен </a>
 
     <footer th:insert="footer::footer"></footer>
 </body>
