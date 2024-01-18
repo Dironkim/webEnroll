@@ -1,16 +1,12 @@
-package com.aktivgo.demo.dao;
+package com.spring.demo.dao;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface Dao<T> {
-    long size();
-
+    public long size();
     Optional<T> get(Long id);
-
     List<T> getAll();
-
     void save(T t);
-
     void delete(T t);
 }

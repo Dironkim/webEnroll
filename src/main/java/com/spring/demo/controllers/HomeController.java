@@ -1,4 +1,4 @@
-package com.aktivgo.demo.controller;
+package com.spring.demo.controllers;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Controller;
